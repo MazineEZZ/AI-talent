@@ -1,0 +1,17 @@
+{
+    "programming-languages": ["JavaScript", "Python", "Java", "C#", "TypeScript", "C++", "C", "Go", "Rust", "Swift", "Kotlin", "Ruby", "PHP", 
+  "R", "Julia", "MATLAB", "SAS", "Fortran", "HTML", "CSS",
+  "Haskell", "Clojure", "Elixir", "Erlang", "F#", "OCaml", "Scala", "Lisp", "Scheme",
+  "COBOL", "Pascal", "Ada", "Delphi", "PL/I", "RPG",
+  "Perl", "Lua", "Groovy", "Dart", "Bash", "PowerShell", "VBA", "ActionScript",
+  "APL", "J", "K", "Q", "BQN", "Uiua",
+  "Prolog", "Solidity", "Verilog", "VHDL", "Scratch", "Visual Maker", "SQL", "Objective C", "PL SQL", "Visual Basic"],
+  "natural-languages": [
+  "English", "Spanish", "French", "German", "Arabic", "Mandarin", "Chinese", 
+  "Japanese", "Korean", "Italian", "Portuguese", "Russian", "Hindi", "Bengali", 
+  "Dutch", "Turkish", "Polish", "Swedish", "Norwegian", "Danish", "Finnish", 
+  "Greek", "Hebrew", "Czech", "Romanian", "Hungarian", "Vietnamese", "Thai", 
+  "Indonesian", "Malay", "Filipino", "Tagalog", "Ukrainian", "Persian", "Farsi", 
+  "Urdu", "Swahili", "Afrikaans", "Mandarin Chinese", "Brazilian Portuguese"
+]
+}
