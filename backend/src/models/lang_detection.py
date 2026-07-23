@@ -1,10 +1,8 @@
 import spacy
-import utilities as util
-import cv_parser as cv
+from utils import utilities as util
 import re
 
-# Functions
-def extract_lang(doc, langs_arr, is_prog=False):
+def extract_lang(doc, langs_arr: list[str], is_prog: bool=False) -> list[str]:
     def is_lang(lang):
         return lang in langs_arr
     pred_langs = []
@@ -28,7 +26,7 @@ def extract_lang(doc, langs_arr, is_prog=False):
             if match:
                 base = util.extract_letters(lang)
                 if is_lang(base):
-                    pred_langs.append(lang)
+                    pred_langs.append(util.normalize(lang))
                     continue
              
         if i < len(doc) - 1:
@@ -43,23 +41,25 @@ def extract_lang(doc, langs_arr, is_prog=False):
                 continue
 
         if is_lang(lang):
-            pred_langs.append(lang)
+            pred_langs.append(util.normalize(lang))
     return pred_langs
 
-# Training samples
-dictionary = util.load_file("./dictionary.json")
+dictionary = util.load_file("../../data/dictionary.json")
 prog_langs = util.to_lowercase(dictionary["programming-languages"])
 natural_langs = util.to_lowercase(dictionary["natural-languages"])
 
-# Test samples
-text = cv.text
+def get_prog_langs(cv_text: str) -> list[str]:
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(cv_text)
 
-# * NLP model
-nlp = spacy.load("en_core_web_sm")
-doc = nlp(text)
+    pred_prog_langs = extract_lang(doc, prog_langs, is_prog=True)
 
-pred_prog_langs = extract_lang(doc, prog_langs, is_prog=True)
-pred_langs = extract_lang(doc, natural_langs)
+    return util.get_unique(pred_prog_langs)
 
-print("Programming Languages:", util.get_unique(pred_prog_langs))
-print("Languages:", util.get_unique(pred_langs))
+def get_langs(cv_text: str) -> list[str]:
+    nlp = spacy.load("en_core_web_sm")
+    doc = nlp(cv_text)
+
+    pred_langs = extract_lang(doc, natural_langs)
+
+    return util.get_unique(pred_langs)
