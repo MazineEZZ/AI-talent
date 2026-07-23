@@ -1,37 +1,37 @@
 from pypdf import PdfReader
 import utilities as util
 
-pdf_path = util.get_path("../../data/sample_cv.pdf")
+# TODO fix this path so it's more scalable
+pdf_path = util.get_path("../../data/sample_cv.pdf") 
 
 reader = PdfReader(pdf_path)
 pages = reader.pages
 
 # text = " ".join([ page.extract_text() for page in pages ])
-
-text = """MARCUS VANCE
-Senior Data Engineer | Contact: marcus.vance@example.com
+text = """
+MARCUS VANCE
+Junior Software Engineer
+Email: marcus.vance@example.com | Portfolio: marcusvance.dev | GitHub: github.com/marcusv
 
 PROFESSIONAL SUMMARY
-Results-driven Data Engineer with 5+ years of experience building scalable data pipelines, streaming architectures, and enterprise data warehouses. I excel at data modeling and love to stream real-time analytics to empower business decision-making. Fluent in English, conversational in Spanish, and native in German.
-
-TECHNICAL SKILLS
-- Programming Languages: Python, Scala, Java, SQL, PL/SQL, Bash
-- Big Data Frameworks: Apache Spark, PySpark, Hadoop, Apache Flink, Kafka
-- Data Warehousing & ETL: Snowflake, BigQuery, Amazon Redshift, dbt, Apache Airflow
-- Databases: PostgreSQL, MongoDB, Cassandra, Redis
-- Cloud & Infrastructure: AWS, Docker, Kubernetes, Terraform
+Motivated Junior Full-Stack Developer with 1.5 years of professional experience building responsive web applications and RESTful APIs. Quick learner with strong foundational skills across front-end and back-end development.
 
 WORK EXPERIENCE
-Lead Data Engineer | DataCloud Solutions (2022 - Present)
-- Designed and deployed real-time data ingestion pipelines using PySpark, Kafka, and Apache Flink to process 500GB+ daily.
-- Architected enterprise data warehouses on Snowflake and BigQuery, leveraging dbt for automated transformations.
-- Managed distributed databases including PostgreSQL and Cassandra for low-latency querying.
+Junior Web Developer | TechCraft Systems
+January 2025 – Present (1 year 7 months)
+• Built interactive user interface modules using JavaScript (ES6+), HTML5, and CSS3.
+• Wrote custom SQL queries and stored procedures in PostgreSQL for user authentication services.
+• Developed minor backend API endpoints using Python (Flask).
 
-Data Engineer | Analytics Works (2019 - 2022)
-- Built automated ETL workflows using Apache Airflow, Python, and SQL to aggregate multi-source data.
-- Optimized slow SQL and PL/SQL queries, reducing pipeline execution time by 35%.
-- Containerized data pipelines using Docker and deployed workloads on AWS EC2 and Kubernetes.
+Software Engineering Intern | ByteLabs
+June 2024 – December 2024 (7 months)
+• Assisted in writing unit tests for Python web services using PyTest.
+• Managed database schemas and basic SQL script updates.
 
-EDUCATION & LANGUAGES
-Bachelor of Science in Computer Science | Tech University (2019)
-Languages Spoken: English (Fluent), Spanish (Intermediate), German (Native)"""
+TECHNICAL SKILLS
+• Core Languages: Python, JavaScript, HTML5, CSS3, SQL
+• Frameworks & Tools: Flask, PostgreSQL, Git, Docker, REST APIs
+• Methodologies: Agile/Scrum, Test-Driven Development
+
+EDUCATION
+Bachelor of Science in Computer Science | State University (Graduated 2024)"""
