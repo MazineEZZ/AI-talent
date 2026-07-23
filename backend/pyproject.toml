@@ -1,0 +1,13 @@
+[project]
+name = "ai-talent-backend"
+description = "FastAPI backend for the AI Talent Screener"
+version = "0.1.0"
+requires-python = ">=3.14"
+dependencies = [
+    "fastapi[standard]>=0.139.2",
+    "google-genai>=2.14.0",
+    "pydantic>=2.13.4",
+    "spacy>=3.8.13",
+]
+readme = "README.md"
+
