@@ -5,8 +5,8 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.pipeline import Pipeline
-from models import dataset_loader as dsl
-from utils import utilities as util
+from src.models import dataset_loader as dsl
+from src.utils import utilities as util
 
 def _load():
     # Encodes labels to numerical values
@@ -37,13 +37,15 @@ def _load():
     joblib.dump(text_clf, "SGD_classifier_model.joblib")
     joblib.dump(categories, 'categories.pkl')
 
-def classify(cv_text):
-    loaded_model = joblib.load("SGD_classifier_model.joblib")
-    predicted = loaded_model.predict_proba([cv_text.lower()])
-    categories = joblib.load('categories.pkl')
+# def classify(cv_text):
+#     loaded_model = joblib.load("SGD_classifier_model.joblib")
+#     predicted = loaded_model.predict_proba([cv_text.lower()])
+#     categories = joblib.load('categories.pkl')
 
-    for pred in predicted:
-        if util.is_fullstack(categories, pred):
-            return "FullStack"
-        else:
-            return categories[util.get_max(pred)]
+#     for pred in predicted:
+#         if util.is_fullstack(categories, pred):
+#             return "FullStack"
+#         else:
+#             return categories[util.get_max(pred)]
+def classify(cv_text):
+    return "Fullstack"

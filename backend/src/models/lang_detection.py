@@ -1,5 +1,5 @@
 import spacy
-from utils import utilities as util
+from src.utils import utilities as util
 import re
 
 def extract_lang(doc, langs_arr: list[str], is_prog: bool=False) -> list[str]:
@@ -63,3 +63,4 @@ def get_langs(cv_text: str) -> list[str]:
     pred_langs = extract_lang(doc, natural_langs)
 
     return util.get_unique(pred_langs)
+

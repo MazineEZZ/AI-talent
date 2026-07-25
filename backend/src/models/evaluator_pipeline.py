@@ -1,8 +1,8 @@
-from utils import cv_parser
-from models.lang_detection import get_prog_langs, get_langs
-from models.llm_api import get_LLM_response
+from src.utils import cv_parser
+from src.models.lang_detection import get_prog_langs, get_langs
+from src.models.llm_api import get_LLM_response
 from pydantic import BaseModel
-from models import classifier
+from src.models import classifier
 
 class CandidateEvaluation(BaseModel):
     role: str

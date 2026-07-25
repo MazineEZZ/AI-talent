@@ -1,5 +1,5 @@
 from pypdf import PdfReader
-from utils import utilities as util
+from src.utils import utilities as util
 
 def parse_cv(path: str) -> str:
     pdf_path = util.get_path(path) 

@@ -1,6 +1,15 @@
+import os
+from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 from pydantic import BaseModel, Field
+
+load_dotenv()
+
+api_key = os.getenv("GOOGLE_API_KEY")
+
+if not api_key:
+    raise ValueError("GOOGLE_API_KEY is missing from the environment variables!")
 
 client = genai.Client()
 
@@ -27,7 +36,7 @@ class Qualification(BaseModel):
 # Model Parameters  
 model = "gemini-3.5-flash-lite"
 
-def create_prompt(job_criteria: str, cv: str, prog_langs: str) -> str:
+def create_prompt(job_criteria: str, cv: str, prog_langs: list[str]) -> str:
     return f"""
     Evaluate the candidate's CV against the job criteria and calculate their match percentage strictly using the provided scoring scale.
 

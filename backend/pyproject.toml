@@ -4,10 +4,20 @@ description = "FastAPI backend for the AI Talent Screener"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "boto3>=1.43.55",
     "fastapi[standard]>=0.139.2",
     "google-genai>=2.14.0",
+    "joblib>=1.5.3",
+    "kagglehub[hf-datasets]>=1.0.2",
     "pydantic>=2.13.4",
+    "pypdf>=6.14.2",
+    "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.32",
+    "scikit-learn>=1.9.0",
     "spacy>=3.8.13",
+    "uvicorn>=0.51.0",
 ]
 readme = "README.md"
 
+[tool.fastapi]
+entrypoint = "main:app"
