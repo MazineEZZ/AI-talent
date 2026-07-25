@@ -1,10 +1,11 @@
-from src.utils import cv_parser
+from src.utils.cv_parser import parse_cv
 from src.models.lang_detection import get_prog_langs, get_langs
 from src.models.llm_api import get_LLM_response
 from pydantic import BaseModel
 from src.models import classifier
 
 class CandidateEvaluation(BaseModel):
+    is_engineer: bool
     role: str
     programming_language: list[str]
     natural_languages: list[str]
@@ -14,14 +15,20 @@ class CandidateEvaluation(BaseModel):
     is_qualified: bool
 
 def evaluate_candidate(cv_text: str, job_criteria: str):
+    classifier._load()
     clf = classifier.classify(cv_text)
 
     prog_langs = get_prog_langs(cv_text)
+
+    if not prog_langs:
+        return None 
+
     nat_langs = get_langs(cv_text)
 
     qualification = get_LLM_response(job_criteria, cv_text, prog_langs)
 
     return CandidateEvaluation(
+        is_engineer=True,
         role=clf,
         programming_language=prog_langs,
         natural_languages=nat_langs,
@@ -33,7 +40,7 @@ def evaluate_candidate(cv_text: str, job_criteria: str):
 
 
 if __name__ == "__main__":
-    cv_text = cv_parser.parse_cv("../../data/sample_cv.pdf")
+    cv_text = parse_cv("sample_cv.pdf")
     job_criteria = """
         Required: 3+ years experience, Python, JavaScript, HTML, CSS, SQL.
 

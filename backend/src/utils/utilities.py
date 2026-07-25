@@ -2,15 +2,13 @@ import numpy as np
 import os
 import json
 import re
+from pathlib import Path
 
-def get_path(file_path: str) -> str:
-    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    
-    return os.path.join(BASE_DIR, file_path)
+def get_path(file_name: str) -> str:
+    return Path(__file__).resolve().parents[2] / "data" / file_name
 
-def load_file(file_path: str) -> str:
-    path = get_path(file_path)
-
+def load_file(file_name: str) -> str:
+    path = get_path(file_name)
     with open(path, "r") as file:
         return json.load(file)
 

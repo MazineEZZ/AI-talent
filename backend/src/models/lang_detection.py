@@ -44,7 +44,7 @@ def extract_lang(doc, langs_arr: list[str], is_prog: bool=False) -> list[str]:
             pred_langs.append(util.normalize(lang))
     return pred_langs
 
-dictionary = util.load_file("../models/dictionary.json")
+dictionary = util.load_file("dictionary.json")
 prog_langs = util.to_lowercase(dictionary["programming-languages"])
 natural_langs = util.to_lowercase(dictionary["natural-languages"])
 
