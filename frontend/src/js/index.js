@@ -1,4 +1,5 @@
-import { renderContent } from "./dom/render.js";
+import { initApp } from "./logic/app-logic";
 
-import "./css/layout.css";
+import "../css/layout.css";
 
+initApp();

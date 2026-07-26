@@ -12,6 +12,7 @@ class CandidateEvaluation(BaseModel):
     experience_years: float
     bonus_skills: list[str]
     percentage: float
+    reasoning: str
     is_qualified: bool
 
 def evaluate_candidate(cv_text: str, job_criteria: str):
@@ -35,6 +36,7 @@ def evaluate_candidate(cv_text: str, job_criteria: str):
         experience_years=qualification.experience_years,
         bonus_skills=qualification.bonus_skills,
         percentage=qualification.percentage,
+        reasoning=qualification.reasoning,
         is_qualified=qualification.is_qualified
     )
 

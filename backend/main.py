@@ -4,8 +4,20 @@ from pydantic import BaseModel, Field
 from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
 from pathlib import Path
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 app = FastAPI()
+
+origins = ["*"] if os.getenv("ENV") == "dev" else ""
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
 class EvaluationRequest(BaseModel):
     job_criteria: str = Field(
@@ -40,3 +52,7 @@ async def evaluate(request_data: EvaluationRequest):
     if qualification is None:
         return {"is_engineer": False, "message": "Not an engineering CV"}
     return qualification.model_dump()
+
+@app.get("/test")
+async def test():
+    return {"message": "everything's working"}

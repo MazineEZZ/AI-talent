@@ -1,2 +1,5 @@
-src/assets/
-src/_pycache_/
+backend/src/assets/
+backend/src/_pycache_/
+backend/.env
+frontend/node_modules/
+frontend/dist

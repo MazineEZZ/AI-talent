@@ -15,7 +15,7 @@ function renderEvaluationResult(result) {
         
     const resultText = document.createElement("p");
     resultText.classList.add("evaluation-text");
-    resultText.textContent = result;
+    resultText.textContent = result.reasoning;
 
     contentWrapper.appendChild(resultTitle);
     contentWrapper.appendChild(resultText);
@@ -30,6 +30,7 @@ function renderEvaluationSetup() {
     uploadCvBtn.classList.add("upload-cv-btn")
     uploadCvBtn.id = "upload-cv";
     uploadCvBtn.textContent = "Upload CV"
+    uploadCvBtn.dataset.path = "sample_cv.pdf"
     
     const jobCriteriaInput = document.createElement("input");
     jobCriteriaInput.id = "job-criteria";
@@ -47,7 +48,16 @@ function renderEvaluationSetup() {
     return contentWrapper;
 }
 
-function changePage(renderPageContent) {
+function renderPageHeader() {
+    const headerWrapper = document.createElement("header");
+    headerWrapper.classList.add("header-container");
+
+    return headerWrapper;
+}
+
+function loadPage(renderPageContent) {
+    document.body.replaceChildren();
+
     const header = renderPageHeader();
     const content = renderPageContent();
 
@@ -55,4 +65,4 @@ function changePage(renderPageContent) {
     document.body.appendChild(content);
 }
 
-export { renderEvaluationSetup, renderEvaluationResult, changePage }
+export { renderEvaluationSetup, renderEvaluationResult, loadPage }
