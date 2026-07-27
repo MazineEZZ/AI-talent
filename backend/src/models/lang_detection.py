@@ -2,6 +2,8 @@ import spacy
 from src.utils import utilities as util
 import re
 
+nlp = spacy.load("en_core_web_sm")
+
 def extract_lang(doc, langs_arr: list[str], is_prog: bool=False) -> list[str]:
     def is_lang(lang):
         return lang in langs_arr
@@ -48,19 +50,11 @@ dictionary = util.load_file("dictionary.json")
 prog_langs = util.to_lowercase(dictionary["programming-languages"])
 natural_langs = util.to_lowercase(dictionary["natural-languages"])
 
-def get_prog_langs(cv_text: str) -> list[str]:
-    nlp = spacy.load("en_core_web_sm")
-    doc = nlp(cv_text)
-
-    pred_prog_langs = extract_lang(doc, prog_langs, is_prog=True)
-
-    return util.get_unique(pred_prog_langs)
-
 def get_langs(cv_text: str) -> list[str]:
-    nlp = spacy.load("en_core_web_sm")
     doc = nlp(cv_text)
 
     pred_langs = extract_lang(doc, natural_langs)
+    pred_prog_langs = extract_lang(doc, prog_langs, is_prog=True)
 
-    return util.get_unique(pred_langs)
+    return util.get_unique(pred_prog_langs), util.get_unique(pred_langs)
 

@@ -18,7 +18,7 @@ class Qualification(BaseModel):
         description="Brief evaluation summary explaining why the score was assigned"
     )
     is_qualified: bool = Field(
-        description="True only if candidate has 3+ years experience AND all skills"
+        description="True only if candidate meets all job criteria requirements"
     )
     percentage: float = Field(
         description=(

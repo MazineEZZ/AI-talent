@@ -14,8 +14,8 @@ function renderEvaluationResult(result) {
     resultTitle.textContent = "Evaluation Result:";
         
     const resultText = document.createElement("p");
-    resultText.classList.add("evaluation-text");
-    resultText.textContent = result.reasoning;
+    resultText.classList.add("evaluation-text");    
+    resultText.textContent = JSON.stringify(result);
 
     contentWrapper.appendChild(resultTitle);
     contentWrapper.appendChild(resultText);
@@ -26,11 +26,20 @@ function renderEvaluationResult(result) {
 function renderEvaluationSetup() {
     const contentWrapper = getContentWrapper()
 
-    const uploadCvBtn = document.createElement("button");
-    uploadCvBtn.classList.add("upload-cv-btn")
-    uploadCvBtn.id = "upload-cv";
-    uploadCvBtn.textContent = "Upload CV"
-    uploadCvBtn.dataset.path = "sample_cv.pdf"
+    const uploadCv = document.createElement("div");
+    uploadCv.classList.add("file-input");
+
+    const uploadCvInput = document.createElement("input");
+    uploadCvInput.type = "file";
+    uploadCvInput.classList.add("upload-cv")
+    uploadCvInput.id = "upload-cv";
+
+    const uploadCvLabel = document.createElement("label");
+    uploadCvLabel.for = uploadCvInput.id;
+    uploadCvLabel.textContent = "Upload CV"
+
+    uploadCv.appendChild(uploadCvInput);
+    uploadCv.appendChild(uploadCvLabel);
     
     const jobCriteriaInput = document.createElement("input");
     jobCriteriaInput.id = "job-criteria";
@@ -41,7 +50,7 @@ function renderEvaluationSetup() {
     evaluateBtn.classList.add("evaluate-cv-btn");
     evaluateBtn.textContent = "Evaluate CV"
 
-    contentWrapper.appendChild(uploadCvBtn);
+    contentWrapper.appendChild(uploadCv);
     contentWrapper.appendChild(jobCriteriaInput);
     contentWrapper.appendChild(evaluateBtn);
 

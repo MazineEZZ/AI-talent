@@ -1,30 +1,24 @@
+import { evaluateCV, uploadCV } from "../api/evaluation-service";
 import { renderEvaluationResult, loadPage } from "../dom/render";
 
-
 async function evaluateResults() {
-    const file_name = document.querySelector("#upload-cv").dataset.path;
-    const job_criteria = document.querySelector("#job-criteria").value;
+    const file = document.querySelector("#upload-cv").files[0];
+    const jobCriteria = document.querySelector("#job-criteria").value;
 
-    const url = "http://127.0.0.1:8000/evaluate/"
-
-    const options = {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ job_criteria, file_name })
+    if (!file) {
+        console.error("No file selected");
+        return;
     }
-    
-    let evaluationResult;
+
+    let result;
     try {
-        const response = await fetch(url, options)
-        
-        evaluationResult = await response.json();
-    } catch(error) {
+        result = await evaluateCV(jobCriteria, file);
+    } catch (error) {
         console.error(error.message);
         return;
     }
-    
-    const renderPage = () => renderEvaluationResult(evaluationResult);
-    loadPage(renderPage);
+
+    loadPage(() => renderEvaluationResult(result));
 }
 
 function setupEventListener() {
@@ -32,7 +26,7 @@ function setupEventListener() {
     
     content.addEventListener("click", (e) => {
         if (e.target.id === "evaluate-cv") {
-            evaluateResults()
+            evaluateResults();
         }
     })
 }

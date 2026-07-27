@@ -15,7 +15,23 @@ body {
     gap: 10px;
 }
 
-.upload-cv-btn {
+.upload-cv {
     width: 150px;
     aspect-ratio: 1 / 1;
+}
+
+#upload-cv {
+    opacity: 0;
+    height: 18px;
+    width: 74px;
+    position: absolute;
+    cursor: pointer;
+}
+
+.file-input label {
+    background-color: gray;
+    height: 2em;
+    width: 100px;
+
+    cursor: pointer;
 }

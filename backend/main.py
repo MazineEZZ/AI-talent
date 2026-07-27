@@ -1,12 +1,8 @@
-import os
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel, Field
+from fastapi import FastAPI, HTTPException, UploadFile, Form
 from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
-from pathlib import Path
 from fastapi.middleware.cors import CORSMiddleware
-
-
+import tempfile, os
 
 app = FastAPI()
 
@@ -19,35 +15,22 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-class EvaluationRequest(BaseModel):
-    job_criteria: str = Field(
-        description="The job criteria. The text that's going to compare the user's skills with the requirements",
-        max_length=300
-    )
-    file_name: str = Field(
-        description="The path to the CV pdf of the user"
-    )
-
 @app.post("/evaluate")
-async def evaluate(request_data: EvaluationRequest):
-    file_name = request_data.file_name
-    criteria = request_data.job_criteria
+async def evaluate(file: UploadFile, job_criteria: str = Form(...)):
+    if not file.filename.endswith(".pdf"):
+        raise HTTPException(status_code=400, detail="File must be a PDF")
 
-    if not file_name:
-        raise HTTPException(
-            status_code=400,
-            detail="CV file name is not specified"
-        )
+    # Small workaround until I implement S3 to prevent bloat
+    with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
+        tmp.write(await file.read())
+        tmp_path = tmp.name
 
     try:
-        text = parse_cv(file_name)
-    except FileNotFoundError:
-        raise HTTPException(
-            status_code=400,
-            detail="CV file is not found"
-        )
+        text = parse_cv(tmp_path)
+    finally:
+        os.remove(tmp_path)
 
-    qualification = evaluate_candidate(text, criteria)
+    qualification = evaluate_candidate(text, job_criteria)
 
     if qualification is None:
         return {"is_engineer": False, "message": "Not an engineering CV"}
