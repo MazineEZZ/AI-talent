@@ -1,11 +1,15 @@
 import { setupEventListener } from "../events/event-listener.js"
-import { loadPage, renderEvaluationContent, renderSidebar, renderAppWrapper } from "../dom/render-hub.js";
+import { loadPage, renderEvaluationContent, renderSidebar, renderAppWrapper, refreshPage } from "../dom/render-hub.js";
 import { appState } from "../global/state.js";
 
 function initApp() {
-    appState.currPage = renderEvaluationContent;
+    const defaultTab = "evaluation";
+    appState.currTabId = `${defaultTab}-id`;
 
-    renderAppWrapper(appState.currPage);
+    renderAppWrapper();
+    appState.getAppWrapper = () => document.querySelector(".app-wrapper");
+
+    refreshPage();
 
     setupEventListener();
 }

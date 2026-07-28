@@ -1,28 +1,46 @@
-import { renderSidebar, renderEvaluationContent, createDOMElement } from "./render-content";
+import { appState } from "../global/state";
+import { renderSidebar, createDOMElement } from "./render-content";
+import { renderCandidatesContent } from "./candidates-content";
+import { renderEvaluationContent } from "./evaluation-content";
+import { renderSettingsContent } from "./settings-content";
 
-function loadPage(renderContent) {
-    document.body.replaceChildren();
-
-    const content = renderContent();
-
-    document.body.appendChild(content);
-}
-
-function renderAppWrapper(currPage) {
+function renderAppWrapper() {
     const appContainer = createDOMElement({
         name: "app-wrapper",
         id: "app-wrapper"
-    }
-    );
-
-    const sidebar = renderSidebar();
-    const content = currPage();
-
-    appContainer.appendChild(sidebar);
-    appContainer.appendChild(content);
+    });
 
     document.body.appendChild(appContainer);
 }
 
+function getContentRenderer() {
+    const tabId = appState.currTabId;
+    if (tabId.includes("evaluation")) {
+        return renderEvaluationContent();
+    } else if (tabId.includes("candidates")) {
+        return renderCandidatesContent();
+    } else if (tabId.includes("settings")) {
+        return renderSettingsContent();
+    }
+}
 
-export { renderSidebar, renderEvaluationContent, loadPage, renderAppWrapper }
+function toggleSelectedTab(sidebar, selectedTabId) {
+    sidebar.querySelectorAll(".tab").forEach((tab) => {
+        tab.classList.toggle(".selected", tab.id === selectedTabId);
+    })
+}
+
+function refreshPage() {
+    const appWrapper = appState.getAppWrapper();
+    appWrapper.replaceChildren();
+
+    const sidebar = renderSidebar();
+    const content = getContentRenderer();
+    
+    toggleSelectedTab(sidebar, appState.currTabId);
+
+    appWrapper.appendChild(sidebar);
+    appWrapper.appendChild(content);
+}
+
+export { renderSidebar, renderEvaluationContent, refreshPage, renderAppWrapper }

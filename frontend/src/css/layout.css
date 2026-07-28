@@ -126,7 +126,7 @@ body {
 }
 
 .content-wrapper .body {
-    flex-grow: 1;
+    flex-grow: 0.8;
 
     padding: 4em clamp(3rem, 6vw, 8rem);
 }
@@ -156,5 +156,3 @@ body {
     flex-direction: column;
     justify-content: space-between;
 }
-
-

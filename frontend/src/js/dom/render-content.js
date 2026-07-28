@@ -25,6 +25,32 @@ function createDOMElement({type="div", kind="", name = "", text = "", classArr =
     return element
 }
 
+function createContentComp(tabName, contentTitle) {
+    const contentWrapper = createDOMElement({
+        name:"content-wrapper", 
+        id:"content"
+    });
+
+    // Header
+    const header = createDOMElement({name:"header"});
+    
+    const title = createDOMElement({
+        name: `${tabName}-title`,
+        text: contentTitle,
+        classArr: ["title"]
+    });
+
+    header.appendChild(title);
+
+    // Body
+    const body = createDOMElement({name:"body"});
+
+    // Footer
+    const footer = createPageFooter();
+
+    return { contentWrapper, header, body, footer };
+}
+
 function createPageFooter() {
     const footer = createDOMElement({name:"footer"});
 
@@ -55,20 +81,17 @@ function renderSidebar() {
     // Body
     const body = createDOMElement({name:"body"});
 
-    const evaluationTab = createDOMElement({
-        name:"evaluation",
-        classArr: ["tab"],
-        text: "Evaluation"
+    const tabs = ["evaluation", "candidates"];
+
+    tabs.forEach((tab) => {
+        body.appendChild(createDOMElement({
+            name: tab,
+            classArr: ["tab"],
+            text: capitalize(tab),
+            id: `${tab}-tab`
+        }))
     })
 
-    const candidatesTab = createDOMElement({
-        name:"candidates",
-        classArr: ["tab"],
-        text: "Candidates"
-    })
-    
-    body.appendChild(evaluationTab);
-    body.appendChild(candidatesTab);
 
     // Footer
     const footer = createDOMElement({name:"footer"});
@@ -76,7 +99,8 @@ function renderSidebar() {
     const settingsTab = createDOMElement({
         name:"settings",
         classArr: ["tab"],
-        text: "Settings"
+        text: "Settings",
+        id: "settings-tab"
     })
 
     footer.appendChild(settingsTab);
@@ -88,129 +112,4 @@ function renderSidebar() {
     return sidebarWrapper;
 }
 
-function renderEvaluationContent() {
-    const contentWrapper = createDOMElement({
-        name:"content-wrapper", 
-        id:"content"
-    });
-
-    const tabName = "evaluation";
-    
-    // Header
-    const header = createDOMElement({name:"header"});
-
-    const title = createDOMElement({
-        name: `${tabName}-title`,
-        text: "Evaluate CVs",
-        classArr: ["title"]
-    });
-
-    header.appendChild(title);
-
-    // Body
-    const body = createDOMElement({name: "body"});
-
-    const form = document.createElement("form");
-
-    const uploadSection = createDOMElement({name: "upload-section"});
-
-    const uploadResumesInput = createDOMElement({
-        type: "input",
-        kind: "file",
-        name: "upload-resumes",
-        id: "upload-resumes"
-    });
-    uploadResumesInput.multiple = true;
-    uploadResumesInput.accept = ".pdf";
-    
-    const configSection = createDOMElement({name:"config-section"});
-
-    const jobCriteriaId = "job-criteria";
-    const jobCriteriaContainer = createDOMElement({
-        type: "p"
-    })
-    
-    const jobCriteriaLabel = createDOMElement({
-        type: "label",
-        name: jobCriteriaId + "-label",
-        text: "Job Criteria:"
-    })
-    jobCriteriaLabel.htmlFor = jobCriteriaId;
-
-    const jobCriteriaInput = createDOMElement({
-        type: "input",
-        kind: "text",
-        name: jobCriteriaId + "-input",
-        id: jobCriteriaId
-    })
-    jobCriteriaInput.placeholder = "Enter job criteria (i.e, experience, languages, etc...)";
-
-    jobCriteriaContainer.appendChild(jobCriteriaLabel);
-    jobCriteriaContainer.appendChild(jobCriteriaInput);
-
-    const paramsContainer = createDOMElement({
-        name:"param",
-        classArr: ["container"],
-    })
-
-    const evaluateBtn = createDOMElement({
-        type: "button",
-        kind: "button",
-        name: "evaluate-btn",
-        id: "evaluate-btn",
-        text: "Evaluate"
-    });
-    
-    configSection.appendChild(jobCriteriaContainer);
-    configSection.appendChild(paramsContainer);
-    configSection.appendChild(evaluateBtn);
-
-    uploadSection.appendChild(uploadResumesInput);
-
-    form.appendChild(uploadSection);
-    form.appendChild(configSection);
-
-    body.appendChild(form);
-
-    // Footer
-    const footer = createPageFooter();
-
-    contentWrapper.appendChild(header);
-    contentWrapper.appendChild(body);
-    contentWrapper.appendChild(footer);
-
-    return contentWrapper;
-}
-
-function renderCandidatesContent() {
-    const contentWrapper = createDOMElement({
-        name:"content-wrapper", 
-        id:"content"
-    });
-
-    const tabName = "candidates";
-
-    // Header
-    const header = createDOMElement({name:"header"});
-    
-    const title = createDOMElement({
-        name: `${tabName}-title`,
-        text: "Candidates List",
-        classArr: ["title"]
-    });
-
-    // Body
-    const body = createDOMElement({name:"body"});
-
-    const table = createDOMElement({
-        type: "table",
-        name: `${tabName}-table`,
-    })
-
-    // Footer
-    const footer = createPageFooter();
-
-    return contentWrapper;
-}
-
-export { renderSidebar, renderEvaluationContent, createDOMElement };
+export { renderSidebar, createDOMElement, createContentComp };
