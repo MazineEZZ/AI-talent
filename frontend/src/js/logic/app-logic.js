@@ -1,8 +1,11 @@
 import { setupEventListener } from "../events/event-listener.js"
-import { loadPage, renderEvaluationResult, renderEvaluationSetup } from "../dom/render";
+import { loadPage, renderEvaluationContent, renderSidebar, renderAppWrapper } from "../dom/render-hub.js";
+import { appState } from "../global/state.js";
 
 function initApp() {
-    loadPage(renderEvaluationSetup);
+    appState.currPage = renderEvaluationContent;
+
+    renderAppWrapper(appState.currPage);
 
     setupEventListener();
 }

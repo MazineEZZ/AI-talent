@@ -1,5 +1,6 @@
 backend/src/assets/
 backend/src/_pycache_/
 backend/.env
+backend/.venv/
 frontend/node_modules/
 frontend/dist

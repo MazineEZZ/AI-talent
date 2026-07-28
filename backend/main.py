@@ -1,4 +1,5 @@
-from fastapi import FastAPI, HTTPException, UploadFile, Form
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, UploadFile, Form, File
 from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
 from fastapi.middleware.cors import CORSMiddleware
@@ -20,7 +21,7 @@ async def evaluate(file: UploadFile, job_criteria: str = Form(...)):
     if not file.filename.endswith(".pdf"):
         raise HTTPException(status_code=400, detail="File must be a PDF")
 
-    # Small workaround until I implement S3 to prevent bloat
+    # Small workaround to prevent bloat, until I implement S3 
     with tempfile.NamedTemporaryFile(suffix=".pdf", delete=False) as tmp:
         tmp.write(await file.read())
         tmp_path = tmp.name
@@ -39,3 +40,7 @@ async def evaluate(file: UploadFile, job_criteria: str = Form(...)):
 @app.get("/test")
 async def test():
     return {"message": "everything's working"}
+
+@app.post("/uploadfiles/")
+async def upload_files(files: list[UploadFile]):
+    return {"filenames": [file.filename for file in files]}
