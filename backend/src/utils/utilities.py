@@ -59,3 +59,15 @@ def to_lowercase(array: list) -> list:
 
 def normalize(lang: str) -> str:
     return extract_letters(lang) if re.search(r'\d$', lang) else lang
+
+def sort_candidates(candidates: list[dict]) -> list[dict]:
+    for i in range(len(candidates) - 1):
+        indMax = i
+        for j in range(len(candidates) - 1):
+            if (float(candidates[indMax]["percentage"]) > float(candidates[j]["percentage"])):
+                indMax = j
+        if (indMax != i):
+            candidates[indMax], candidates[i] = candidates[i], candidates[indMax]
+
+def sort_candidates(candidates: list[dict]) -> list[dict]:
+    candidates.sort(key=lambda c: c.get("percentage", -1), reverse=True)

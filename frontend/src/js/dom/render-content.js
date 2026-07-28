@@ -25,6 +25,19 @@ function createDOMElement({type="div", kind="", name = "", text = "", classArr =
     return element
 }
 
+function createPageFooter() {
+    const footer = createDOMElement({name:"footer"});
+
+    const credits = createDOMElement({
+        name:"credits",
+        text: "credits"
+    });
+
+    footer.appendChild(credits);
+
+    return footer;
+}
+
 function renderSidebar() {
     const sidebarWrapper = createDOMElement({
         name: "sidebar-wrapper",
@@ -160,18 +173,42 @@ function renderEvaluationContent() {
     body.appendChild(form);
 
     // Footer
-    const footer = createDOMElement({name:"footer"});
-
-    const credits = createDOMElement({
-        name:"credits",
-        text: "credits"
-    });
-
-    footer.appendChild(credits);
+    const footer = createPageFooter();
 
     contentWrapper.appendChild(header);
     contentWrapper.appendChild(body);
     contentWrapper.appendChild(footer);
+
+    return contentWrapper;
+}
+
+function renderCandidatesContent() {
+    const contentWrapper = createDOMElement({
+        name:"content-wrapper", 
+        id:"content"
+    });
+
+    const tabName = "candidates";
+
+    // Header
+    const header = createDOMElement({name:"header"});
+    
+    const title = createDOMElement({
+        name: `${tabName}-title`,
+        text: "Candidates List",
+        classArr: ["title"]
+    });
+
+    // Body
+    const body = createDOMElement({name:"body"});
+
+    const table = createDOMElement({
+        type: "table",
+        name: `${tabName}-table`,
+    })
+
+    // Footer
+    const footer = createPageFooter();
 
     return contentWrapper;
 }

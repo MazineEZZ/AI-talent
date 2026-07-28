@@ -1,8 +1,10 @@
 const BASE_URL = "http://127.0.0.1:8000";
 
-async function evaluateCV(jobCriteria, file) {
+async function evaluateCV(files, jobCriteria) {
     const formData = new FormData();
-    formData.append("file", file);
+    Array.from(files).forEach((file) => {
+        formData.append("files", file);
+    })
     formData.append("job_criteria", jobCriteria);
 
     const options = {
