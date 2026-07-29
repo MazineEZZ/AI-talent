@@ -14,6 +14,7 @@ if not api_key:
 client = genai.Client()
 
 class Qualification(BaseModel):
+    name: str = Field("Candidates name, start with the first name and then last name both capitalized")
     reasoning: str = Field(
         description="Brief evaluation summary explaining why the score was assigned"
     )

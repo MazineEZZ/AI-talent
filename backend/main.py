@@ -1,10 +1,11 @@
+import os
 from typing import Annotated
 from fastapi import FastAPI, HTTPException, UploadFile, Form, File
 from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
 from src.utils.utilities import sort_candidates
 from fastapi.middleware.cors import CORSMiddleware
-import tempfile, os
+from src.sql.alchemy import get_candidate, add_candidate
 
 app = FastAPI()
 
@@ -39,12 +40,27 @@ async def evaluate(files: list[UploadFile], job_criteria: str = Form(...)):
             candidate_cvs.append({"is_engineer": False, "message": "Not an engineering CV"})
         else:
             result = qualification.model_dump()
+            add_candidate(
+                name=result["name"],
+                role=result["role"],
+                programming_languages=result["programming_languages"],
+                natural_languages=result["natural_languages"], 
+                experience_years=result["experience_years"],
+                bonus_skills=result["bonus_skills"],
+                percentage=result["percentage"],
+                reasoning=result["reasoning"],
+                is_qualified=result["is_qualified"]
+            )
             result["filename"] = file.filename
             candidate_cvs.append(result)
 
     sort_candidates(candidate_cvs)
 
     return candidate_cvs
+
+# @app.get("/candidates")
+# async def get_candidates()
+
 
 @app.get("/test")
 async def test():

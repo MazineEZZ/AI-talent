@@ -5,9 +5,10 @@ from pydantic import BaseModel
 from src.models import classifier
 
 class CandidateEvaluation(BaseModel):
+    name: str
     is_engineer: bool
     role: str
-    programming_language: list[str]
+    programming_languages: list[str]
     natural_languages: list[str]
     experience_years: float
     bonus_skills: list[str]
@@ -27,9 +28,10 @@ def evaluate_candidate(cv_text: str, job_criteria: str):
     qualification = get_LLM_response(job_criteria, cv_text, prog_langs)
 
     return CandidateEvaluation(
+        name=qualification.name,
         is_engineer=True,
         role=clf,
-        programming_language=prog_langs,
+        programming_languages=prog_langs,
         natural_languages=nat_langs,
         experience_years=qualification.experience_years,
         bonus_skills=qualification.bonus_skills,
