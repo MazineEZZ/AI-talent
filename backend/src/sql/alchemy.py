@@ -1,8 +1,9 @@
 from sqlalchemy import create_engine, Column, Integer, String, JSON, Float, Boolean, desc
 from sqlalchemy.orm import sessionmaker, declarative_base
 from contextlib import contextmanager
+import os
 
-DATABASE_URL = "postgresql://postgres:admin@172.24.160.1:5432/resume_eval_db"
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 engine = create_engine(DATABASE_URL)
 

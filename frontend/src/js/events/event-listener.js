@@ -3,12 +3,11 @@ import { renderEvaluationContent, refreshPage, renderContentModal } from "../dom
 import { appState } from "../global/state.js";
 
 async function fetchEvaluationResult() {
-    appState.files = document.querySelector("#upload-resumes").files;
     appState.jobCriteria = document.querySelector("#job-criteria").value;
     appState.allowModalClose = false;
     
     try {
-        const response = await evaluateResumes(appState.files, appState.jobCriteria);
+        const response = await evaluateResumes(appState.uploadedFiles, appState.jobCriteria);
         changeModalContent(response.message);
         
         const results = await getCandidates();
@@ -66,6 +65,23 @@ function setupEventListener() {
         if (e.target.classList.contains("tab")) {
             appState.currTabId = e.target.id;
             refreshPage();
+        }
+    })
+
+    appWrapper.addEventListener("change", (e) => {
+        if (e.target.id === "upload-resumes") {
+            appState.uploadedFiles.push(...e.target.files);
+
+            if (appState.uploadedFiles.length > 9) {
+                alert("You can upload a maximum of 9 files.");
+                appState.uploadedFiles = null;
+                return;
+            }
+
+            if (appState.uploadedFiles.length > 0) {
+                refreshPage();
+            }
+
         }
     })
 

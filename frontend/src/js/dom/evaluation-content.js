@@ -1,4 +1,82 @@
+import { appState } from "../global/state";
 import { createDOMElement, createContentComp } from "./render-content";
+
+function renderUploadedFiles() {
+    const uploadedFiles = appState.uploadedFiles;
+    
+    const cardContainer = createDOMElement({
+        name: "file-card-container",
+    })
+    
+    if (!uploadedFiles) {
+        return cardContainer;
+    }
+    
+
+    Array.from(uploadedFiles).forEach((file) => {
+        const fileCard = createDOMElement({
+            name: "file-card",
+        })
+    
+        const filePreview = createDOMElement({
+            name: "file-preview",
+        })
+    
+        const fileName = createDOMElement({
+            type: "p",
+            name: "file-name",
+            text: file.name
+        })
+    
+        fileCard.appendChild(filePreview);
+        fileCard.appendChild(fileName);        
+        
+        cardContainer.appendChild(fileCard);
+    })
+
+    return cardContainer;
+}
+
+function renderUploadSection() {
+    const uploadSection = createDOMElement({name: "upload-section"});
+
+    // Uploaded Files
+    const cardContainer = renderUploadedFiles().childNodes;
+    
+    // Upload Files
+    const uploadResumesId = "upload-resumes";
+    const uploadResumesContainer = createDOMElement({
+        type: "p"
+    })
+
+    const uploadResumesLabel = createDOMElement({
+        type: "label",
+        name: uploadResumesId + "-label",
+        text: "+"
+    })
+    uploadResumesLabel.htmlFor = uploadResumesId;
+
+    const uploadResumesInput = createDOMElement({
+        type: "input",
+        kind: "file",
+        name: uploadResumesId + "-input",
+        id: uploadResumesId
+    });
+    uploadResumesInput.multiple = true;
+    uploadResumesInput.accept = ".pdf";
+
+    uploadResumesContainer.appendChild(uploadResumesLabel);
+    uploadResumesContainer.appendChild(uploadResumesInput);
+
+    if (cardContainer) {
+        Array.from(cardContainer).forEach((card) => {
+            uploadSection.appendChild(card);
+        })
+    }
+    uploadSection.appendChild(uploadResumesContainer);
+
+    return uploadSection;
+}
 
 export function renderEvaluationContent() {
     const tabName = "evaluation";
@@ -8,17 +86,10 @@ export function renderEvaluationContent() {
     // Body
     const form = document.createElement("form");
 
-    const uploadSection = createDOMElement({name: "upload-section"});
+    /// Upload Section
+    const uploadSection = renderUploadSection();
 
-    const uploadResumesInput = createDOMElement({
-        type: "input",
-        kind: "file",
-        name: "upload-resumes",
-        id: "upload-resumes"
-    });
-    uploadResumesInput.multiple = true;
-    uploadResumesInput.accept = ".pdf";
-    
+    /// Config Section
     const configSection = createDOMElement({name:"config-section"});
 
     const jobCriteriaId = "job-criteria";
@@ -60,8 +131,6 @@ export function renderEvaluationContent() {
     configSection.appendChild(jobCriteriaContainer);
     configSection.appendChild(paramsContainer);
     configSection.appendChild(evaluateBtn);
-
-    uploadSection.appendChild(uploadResumesInput);
 
     form.appendChild(uploadSection);
     form.appendChild(configSection);

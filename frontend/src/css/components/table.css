@@ -1,24 +1,47 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--clr-border);
+}
+
 table {
-  width: 100%;
-  border-collapse: collapse; /* Removes default gaps between cell borders */
-  font-family: sans-serif;
+    width: 100%;
+    border-collapse: separate; 
+    border-spacing: 0;
+    
+    font-family: var(--font-family);
+    color: var(--clr-text-main);
+    background-color: var(--clr-bg-main);
 }
 
 th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd; /* Clean horizontal lines */
+    padding: var(--space-md) var(--space-lg);
+    text-align: left;
+    border-bottom: 1px solid var(--clr-border);
+    font-size: var(--fs-base);
+}
+
+tr:last-child td {
+    border-bottom: none;
 }
 
 th {
-  background-color: #f4f4f4; /* Subtle header background */
-  font-weight: bold;
+    background-color: var(--clr-bg-surface);
+    color: var(--clr-text-muted);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 tr:nth-child(even) {
-  background-color: #f9f9f9; /* Optional zebra striping */
+    background-color: #fafcff; 
 }
 
 tr:hover {
-  background-color: #f1f1f1; /* Optional hover effect */
+    background-color: var(--clr-bg-surface);
+    transition: background-color 0.15s ease-in-out;
+    cursor: default;
 }

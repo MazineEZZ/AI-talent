@@ -1,14 +1,10 @@
-<<<<<<< HEAD
-src/assets/
-src/_pycache_/__pycache__/
-*.pyc
-__pycache__/
-*.pyc
-=======
 backend/src/assets/
-backend/src/_pycache_/
+backend/__pycache__/
+backend/src/models/__pycache__/
+backend/src/utils/__pycache__/
+backend/src/sql/__pycache__/
+
 backend/.env
 backend/.venv/
 frontend/node_modules/
 frontend/dist
->>>>>>> dev

@@ -1,0 +1,173 @@
+.content-wrapper .body form .upload-section {
+    flex: 0.7;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: 140px;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--clr-bg-main);
+    border: 2px dashed var(--clr-border);
+    border-radius: var(--radius-md);
+    overflow-y: auto;
+}
+
+.upload-section p {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.content-wrapper #upload-resumes {
+    display: none;
+}
+
+.content-wrapper .upload-resumes-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+    color: var(--clr-primary);
+    background-color: var(--clr-bg-surface);
+    border: 2px dashed var(--clr-primary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.content-wrapper .upload-resumes-label:hover {
+    background-color: #e6f2ff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.content-wrapper .file-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    background-color: var(--clr-bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.content-wrapper .file-preview {
+    width: 48px;
+    height: 60px;
+    background-color: #ffebee;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--drop-shadow-sm);
+}
+
+.content-wrapper .file-preview::before {
+    content: "PDF";
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-danger);
+}
+
+.content-wrapper .file-card .file-name {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-main);
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.content-wrapper .body form .upload-section {
+    flex: 0.7;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-auto-rows: 140px;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background-color: var(--clr-bg-main);
+    border: 2px dashed var(--clr-border);
+    border-radius: var(--radius-md);
+    overflow-y: auto;
+}
+
+.upload-section p {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.content-wrapper #upload-resumes {
+    display: none;
+}
+
+.content-wrapper .upload-resumes-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    font-size: 3rem;
+    color: var(--clr-primary);
+    background-color: var(--clr-bg-surface);
+    border: 2px dashed var(--clr-primary);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.content-wrapper .upload-resumes-label:hover {
+    background-color: #e6f2ff;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.content-wrapper .file-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm);
+    background-color: var(--clr-bg-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--clr-border);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+}
+
+.content-wrapper .file-preview {
+    width: 48px;
+    height: 60px;
+    background-color: #ffebee;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--drop-shadow-sm);
+}
+
+.content-wrapper .file-preview::before {
+    content: "PDF";
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-danger);
+}
+
+.content-wrapper .file-card .file-name {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--clr-text-main);
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
