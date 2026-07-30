@@ -44,7 +44,7 @@ export function renderCandidatesContent() {
     
     // Body
     if (appState.results) {
-        const tableCols = ["percentage", "role", "programming_language", "experience_years"];
+        const tableCols = ["name", "percentage", "role", "programming_languages", "experience_years"];
 
         const table = createTable(appState.results, tableCols)
 

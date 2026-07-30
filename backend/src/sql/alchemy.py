@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, Column, Integer, String, JSON, Float, Boolean
+from sqlalchemy import create_engine, Column, Integer, String, JSON, Float, Boolean, desc
 from sqlalchemy.orm import sessionmaker, declarative_base
 from contextlib import contextmanager
 
@@ -73,6 +73,12 @@ def get_candidate(name):
         candidate = session.query(Candidate).filter_by(name=name).first()
     
         return candidate
+
+def get_candidates():
+    with session_scope() as session:
+        candidates = session.query(Candidate).order_by(desc(Candidate.percentage)).all()
+
+        return candidates
 
 def delete_candidate(name):
     with session_scope() as session:

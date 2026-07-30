@@ -1,6 +1,6 @@
 const BASE_URL = "http://127.0.0.1:8000";
 
-async function evaluateCV(files, jobCriteria) {
+async function evaluateResumes(files, jobCriteria) {
     const formData = new FormData();
     Array.from(files).forEach((file) => {
         formData.append("files", file);
@@ -21,4 +21,18 @@ async function evaluateCV(files, jobCriteria) {
     return response.json();
 }
 
-export { evaluateCV }
+async function getCandidates() {
+    const options = {
+        method: "GET",
+    }
+
+    const response = await fetch(`${BASE_URL}/candidates`, options);
+
+    if (!response.ok) {
+        const err = await response.json();
+        throw new Error(err.detail || "Fetching Candidates failed");
+    }
+    return response.json();
+}
+
+export { evaluateResumes, getCandidates }

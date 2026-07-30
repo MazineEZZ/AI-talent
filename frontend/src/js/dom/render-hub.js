@@ -3,14 +3,24 @@ import { renderSidebar, createDOMElement } from "./render-content";
 import { renderCandidatesContent } from "./candidates-content";
 import { renderEvaluationContent } from "./evaluation-content";
 import { renderSettingsContent } from "./settings-content";
+import { renderContentModal } from "./render-modals";
 
 function renderAppWrapper() {
-    const appContainer = createDOMElement({
+    const appWrapper = createDOMElement({
         name: "app-wrapper",
         id: "app-wrapper"
     });
 
-    document.body.appendChild(appContainer);
+    document.body.appendChild(appWrapper);
+}
+
+function renderModalWrapper() {
+    const modalWrapper = createDOMElement({
+        name: "modal-wrapper",
+        id: "modal-wrapper"
+    })
+
+    document.body.appendChild(modalWrapper);
 }
 
 function getContentRenderer() {
@@ -43,4 +53,4 @@ function refreshPage() {
     appWrapper.appendChild(content);
 }
 
-export { renderSidebar, renderEvaluationContent, refreshPage, renderAppWrapper }
+export { renderSidebar, renderEvaluationContent, refreshPage, renderAppWrapper, renderModalWrapper, renderContentModal }

@@ -5,7 +5,7 @@ from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
 from src.utils.utilities import sort_candidates
 from fastapi.middleware.cors import CORSMiddleware
-from src.sql.alchemy import get_candidate, add_candidate
+from src.sql.alchemy import get_candidates, add_candidate
 
 app = FastAPI()
 
@@ -54,13 +54,13 @@ async def evaluate(files: list[UploadFile], job_criteria: str = Form(...)):
             result["filename"] = file.filename
             candidate_cvs.append(result)
 
-    sort_candidates(candidate_cvs)
+    return {"message": "Evaluation Complete"}
 
-    return candidate_cvs
+@app.get("/candidates")
+async def candidates():
+    candidates = get_candidates()
 
-# @app.get("/candidates")
-# async def get_candidates()
-
+    return candidates
 
 @app.get("/test")
 async def test():
