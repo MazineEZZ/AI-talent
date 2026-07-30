@@ -1,21 +1,67 @@
-from fastapi import FastAPI
-from pydantic import BaseModel, Field
+import os
+from typing import Annotated
+from fastapi import FastAPI, HTTPException, UploadFile, Form, File
 from src.models.evaluator_pipeline import evaluate_candidate
 from src.utils.cv_parser import parse_cv
+from src.utils.utilities import sort_candidates
+from fastapi.middleware.cors import CORSMiddleware
+from src.sql.alchemy import get_candidates, add_candidate
 
 app = FastAPI()
 
-class EvaluationRequest(BaseModel):
-    job_criteria: str = Field(
-        description="The job criteria. The text that's going to compare the user's skills with the requirements"
-    )
-    cv_path: str = Field(
-        description="The path to the CV pdf of the user"
-    )
+origins = ["*"] if os.getenv("ENV") == "dev" else ""
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
+)
 
 @app.post("/evaluate")
-async def evaluate(request_data: EvaluationRequest):
-    cv_text = parse_cv(request_data.cv_path)
-    qualification = evaluate_candidate(cv_text, request_data.job_criteria)
+async def evaluate(files: list[UploadFile], job_criteria: str = Form(...)):
+    for file in files:
+        if not file.filename.endswith(".pdf"):
+            raise HTTPException(status_code=400, detail="File must be a PDF")
 
-    return qualification.model_dump()
+    # Small workaround, until I implement S3 
+    candidate_cvs = []
+    for file in files:
+        file_path = "./data/" + file.filename
+        with open(file_path, "wb") as f:
+            content = await file.read()
+            f.write(content)
+
+        text = parse_cv(file.filename)
+        
+        qualification = evaluate_candidate(text, job_criteria)
+
+        if qualification is None:
+            candidate_cvs.append({"is_engineer": False, "message": "Not an engineering CV"})
+        else:
+            result = qualification.model_dump()
+            add_candidate(
+                name=result["name"],
+                role=result["role"],
+                programming_languages=result["programming_languages"],
+                natural_languages=result["natural_languages"], 
+                experience_years=result["experience_years"],
+                bonus_skills=result["bonus_skills"],
+                percentage=result["percentage"],
+                reasoning=result["reasoning"],
+                is_qualified=result["is_qualified"]
+            )
+            result["filename"] = file.filename
+            candidate_cvs.append(result)
+
+    return {"message": "Evaluation Complete"}
+
+@app.get("/candidates")
+async def candidates():
+    candidates = get_candidates()
+
+    return candidates
+
+@app.get("/test")
+async def test():
+    return {"message": "everything's working"}

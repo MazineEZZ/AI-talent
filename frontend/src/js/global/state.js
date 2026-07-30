@@ -1,0 +1,5 @@
+const appState = {
+
+}
+
+export { appState };

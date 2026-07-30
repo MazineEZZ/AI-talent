@@ -1,5 +1,14 @@
+<<<<<<< HEAD
 src/assets/
 src/_pycache_/__pycache__/
 *.pyc
 __pycache__/
 *.pyc
+=======
+backend/src/assets/
+backend/src/_pycache_/
+backend/.env
+backend/.venv/
+frontend/node_modules/
+frontend/dist
+>>>>>>> dev

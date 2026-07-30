@@ -37,15 +37,13 @@ def _load():
     joblib.dump(text_clf, "SGD_classifier_model.joblib")
     joblib.dump(categories, 'categories.pkl')
 
-# def classify(cv_text):
-#     loaded_model = joblib.load("SGD_classifier_model.joblib")
-#     predicted = loaded_model.predict_proba([cv_text.lower()])
-#     categories = joblib.load('categories.pkl')
-
-#     for pred in predicted:
-#         if util.is_fullstack(categories, pred):
-#             return "FullStack"
-#         else:
-#             return categories[util.get_max(pred)]
 def classify(cv_text):
-    return "Fullstack"
+    loaded_model = joblib.load("SGD_classifier_model.joblib")
+    predicted = loaded_model.predict_proba([cv_text.lower()])
+    categories = joblib.load('categories.pkl')
+
+    for pred in predicted:
+        if util.is_fullstack(categories, pred):
+            return "FullStack"
+        else:
+            return categories[util.get_max(pred)]
