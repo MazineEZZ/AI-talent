@@ -13,10 +13,10 @@ An AI-powered recruitment tool that parses CVs, extracts skills, classifies cand
 
 ## Tech stack
 
-**Backend:** Python, FastAPI, SQLAlchemy, PostgreSQL
-**ML/NLP:** scikit-learn (classification), spaCy (`en_core_web_sm`, skill extraction), Google Gemini API (evaluation & scoring)
-**PDF parsing:** pypdf, with PyMuPDF + Tesseract OCR as a fallback for PDFs with broken font encoding.
-**Frontend:** Vanilla JavaScript, Webpack, no framework with custom made DOM component helpers
+- **Backend:** Python, FastAPI, SQLAlchemy, PostgreSQL
+- **ML/NLP:** scikit-learn (classification), spaCy (`en_core_web_sm`, skill extraction), Google Gemini API (evaluation & scoring)
+- **PDF parsing:** pypdf, with PyMuPDF + Tesseract OCR as a fallback for PDFs with broken font encoding.
+- **Frontend:** Vanilla JavaScript, Webpack, no framework with custom made DOM component helpers
 
 ## Project structure
 
