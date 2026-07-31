@@ -1,5 +1,6 @@
 import { capitalize } from "../utils/utilities";
 import avatarImg from "../../assets/images/avatar.jpeg";
+import { ChartCandlestick, createElement, PanelLeft, Settings, Table} from "lucide";
 
 function createDOMElement({type="div", kind="", name = "", text = "", classArr = [], id = ""}) {
     const element = document.createElement(type);
@@ -90,6 +91,8 @@ function renderSidebar() {
         id: "toggle-sidebar"
     })
 
+    toggleSidebar.appendChild(createElement(PanelLeft))
+
     profileDetails.appendChild(avatar);
     profileDetails.appendChild(profileUsername);
 
@@ -100,29 +103,48 @@ function renderSidebar() {
     // Body
     const body = createDOMElement({name:"body"});
 
-    const tabs = ["evaluation", "candidates"];
+    const tabs = {"evaluation": ChartCandlestick, "candidates": Table};
 
-    tabs.forEach((tab) => {
-        body.appendChild(createDOMElement({
+    for (const tab in tabs) {
+        const tabContainer = createDOMElement({
             name: tab,
             classArr: ["tab"],
-            text: capitalize(tab),
             id: `${tab}-tab`
-        }))
-    })
+        });
 
+        const tabTitle = createDOMElement({
+            name: tab + "-title",
+            text: capitalize(tab)
+        })
+
+        const tabIcon = createElement(tabs[tab]);
+        
+        tabContainer.appendChild(tabIcon);
+        tabContainer.appendChild(tabTitle);
+
+        body.appendChild(tabContainer)
+    }    
 
     // Footer
     const footer = createDOMElement({name:"footer"});
 
-    const settingsTab = createDOMElement({
+    const settingsTabContainer = createDOMElement({
         name:"settings",
         classArr: ["tab"],
-        text: "Settings",
         id: "settings-tab"
     })
 
-    footer.appendChild(settingsTab);
+    const settingsTabTitle = createDOMElement({
+        name:"settings-title",
+        text: "Settings"
+    })
+
+    const settingsTabIcon = createElement(Settings);
+
+    settingsTabContainer.appendChild(settingsTabIcon);
+    settingsTabContainer.appendChild(settingsTabTitle);
+
+    footer.appendChild(settingsTabContainer);
 
     sidebarWrapper.appendChild(profile);
     sidebarWrapper.appendChild(body);

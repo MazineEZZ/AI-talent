@@ -99,6 +99,23 @@ body {
     color: #ffffff;
 }
 
+.tab [class$="title"] {
+    pointer-events: none;
+}
+
+/* SVG */
+svg {
+    stroke-width: 1.5px;
+    pointer-events: none;
+}
+
+.filter svg {
+    width: 1.25em;
+}
+
+
+/* CONTENT WRAPPER */
+
 .content-wrapper {
     display: flex;
     flex-direction: column;

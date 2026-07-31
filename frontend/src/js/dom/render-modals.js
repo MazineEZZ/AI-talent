@@ -1,7 +1,7 @@
 import { appState } from "../global/state";
 import { createDOMElement } from "./render-content";
 
-function renderContentModal({name, id, title, text}) {
+function renderModalCore(name, id, title) {
     const modal = appState.getModalWrapper();
 
     const dialog = createDOMElement({
@@ -17,6 +17,12 @@ function renderContentModal({name, id, title, text}) {
         text: title
     })
 
+    return {modal, dialog, modalTitle};
+}
+
+function renderContentModal({name, id, title, text}) {
+    const {modal, dialog, modalTitle} = renderModalCore(name, id, title);
+
     const modalText = createDOMElement({
         type: "p",
         name: `${name}-text`,
@@ -30,6 +36,49 @@ function renderContentModal({name, id, title, text}) {
     appState.currModal = dialog;
 
     modal.appendChild(dialog);
+
+    dialog.showModal();
 }
 
-export { renderContentModal };
+function renderPDFViewerModal(file) {
+    const {modal, dialog, modalTitle} = renderModalCore("pdf-preview", "pdf-preview", "PDF Preview:");
+
+    const fileURL = URL.createObjectURL(file);
+
+    const header = createDOMElement({
+        name: "header"
+    });
+
+    const closeBtn = createDOMElement({
+        type: "button",
+        classArr: ["close-modal-btn"],
+        text: "Close Preview"
+    });
+    
+    closeBtn.addEventListener("click", () => {
+        dialog.close();
+        URL.revokeObjectURL(fileURL); 
+        dialog.remove();
+    });
+
+    const iframe = createDOMElement({
+        type: "iframe",
+        name: "pdf-preview-frame",
+        id: "pdf-preview-frame"
+    });
+    iframe.src = fileURL;
+
+    header.appendChild(modalTitle);
+    header.appendChild(closeBtn);
+
+    dialog.appendChild(header);
+    dialog.appendChild(iframe);
+
+    appState.currModal = dialog;
+
+    modal.appendChild(dialog);
+
+    dialog.showModal();
+}
+
+export { renderContentModal, renderPDFViewerModal };

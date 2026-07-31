@@ -1,5 +1,6 @@
 import { evaluateResumes, getCandidates } from "../api/evaluation-service";
 import { renderEvaluationContent, refreshPage, renderContentModal } from "../dom/render-hub.js";
+import { renderPDFViewerModal } from "../dom/render-modals.js";
 import { appState } from "../global/state.js";
 
 async function fetchEvaluationResult() {
@@ -24,7 +25,7 @@ function getEvaluationResult() {
     renderContentModal({
                 id: "evaluation",
                 name: "evaluation",
-                title: "Status",
+                title: "Evaluation Breakdown",
                 text: "Evaluation under process..."
             });
     openModal(appState.currModal);
@@ -43,7 +44,7 @@ function handleKeyDown(event) {
         event.preventDefault();
         return;
     }
-    appState.getModalWrapper().replaceChildren();
+    appState.currModal.remove();
 }
 
 function openModal(modal) {
@@ -89,7 +90,8 @@ function setupEventListener() {
         }
 
         if (e.target.classList.contains("file-preview")) {
-            previewPDF(target)
+            const fileId = e.target.dataset.id.split("-")[1];
+            renderPDFViewerModal(appState.uploadedFiles[fileId]);
         }
 
         if (e.target.id === "toggle-sidebar") {

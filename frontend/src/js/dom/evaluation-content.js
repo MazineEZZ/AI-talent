@@ -117,7 +117,7 @@ export function renderEvaluationContent() {
         name: jobCriteriaId + "-input",
         id: jobCriteriaId
     })
-    jobCriteriaInput.placeholder = "Enter job criteria (i.e, experience, languages, etc...)";
+    jobCriteriaInput.placeholder = "e.g. 3+ years experience, Python & SQL required, AWS a plus, Bachelor's in CS preferred"
 
     jobCriteriaContainer.appendChild(jobCriteriaLabel);
     jobCriteriaContainer.appendChild(jobCriteriaInput);
