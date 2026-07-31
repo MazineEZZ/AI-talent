@@ -11,6 +11,9 @@ An AI-powered recruitment tool that parses CVs, extracts skills, classifies cand
 5. **Evaluate**: an LLM (Gemini) scores the candidate against the provided job criteria, returning a match percentage, qualification result, and reasoning.
 6. **Persist & rank**: results are saved to PostgreSQL and displayed ranked by match percentage in the Candidates view
 
+## Project Preview
+![Preview](frontend/src/assets/images/preview.gif)
+
 ## Tech stack
 
 - **Backend:** Python, FastAPI, SQLAlchemy, PostgreSQL
