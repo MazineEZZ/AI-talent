@@ -24,7 +24,7 @@ function getEvaluationResult() {
     renderContentModal({
                 id: "evaluation",
                 name: "evaluation",
-                title: "Info",
+                title: "Status",
                 text: "Evaluation under process..."
             });
     openModal(appState.currModal);
@@ -53,6 +53,23 @@ function openModal(modal) {
     window.addEventListener("keydown", handleKeyDown);
 }
 
+function removeUploadedFile(target) {
+    const fileId = target.dataset.id.split("-")[1];
+    appState.uploadedFiles.splice(fileId, 1);
+    refreshPage();
+}
+
+function toggleElements(btn, ...elements) {
+    if (btn.classList.contains("closed")) {
+        btn.classList.remove("closed");
+        elements.forEach((elmnt) => elmnt.classList.remove("closed"));
+    } else {
+        btn.classList.add("closed");
+        elements.forEach((elmnt) => elmnt.classList.add("closed"));
+    }
+}
+
+
 function setupEventListener() {
     const appWrapper = appState.getAppWrapper();
     const modalWrapper = appState.getModalWrapper();
@@ -66,17 +83,26 @@ function setupEventListener() {
             appState.currTabId = e.target.id;
             refreshPage();
         }
+
+        if (e.target.classList.contains("remove-file-btn")) {
+            removeUploadedFile(e.target);
+        }
+
+        if (e.target.classList.contains("file-preview")) {
+            previewPDF(target)
+        }
+
+        if (e.target.id === "toggle-sidebar") {
+            const sidebar = document.getElementById("sidebar");
+            const content = document.getElementById("content");
+
+            toggleElements(e.target, sidebar, content);
+        }
     })
 
     appWrapper.addEventListener("change", (e) => {
         if (e.target.id === "upload-resumes") {
             appState.uploadedFiles.push(...e.target.files);
-
-            if (appState.uploadedFiles.length > 9) {
-                alert("You can upload a maximum of 9 files.");
-                appState.uploadedFiles = null;
-                return;
-            }
 
             if (appState.uploadedFiles.length > 0) {
                 refreshPage();

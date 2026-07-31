@@ -1,5 +1,7 @@
 .content-wrapper .body form .upload-section {
     flex: 0.7;
+    min-height: 0;     
+    max-height: 100%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     grid-auto-rows: 140px;
@@ -57,19 +59,26 @@
 }
 
 .content-wrapper .file-preview {
-    width: 48px;
-    height: 60px;
+    position: relative;
+    width: 60px;
+    height: 80px;
     background-color: #ffebee;
     border-radius: var(--radius-sm);
     display: flex;
     align-items: center;
     justify-content: center;
     box-shadow: var(--drop-shadow-sm);
+    cursor: pointer;
+}
+
+.content-wrapper .file-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .content-wrapper .file-preview::before {
     content: "PDF";
-    font-size: var(--fs-xs);
+    font-size: var(--fs-sm);
     font-weight: var(--fw-semibold);
     color: var(--clr-danger);
 }
@@ -85,89 +94,34 @@
     white-space: nowrap;
 }
 
-.content-wrapper .body form .upload-section {
-    flex: 0.7;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    grid-auto-rows: 140px;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    background-color: var(--clr-bg-main);
-    border: 2px dashed var(--clr-border);
-    border-radius: var(--radius-md);
-    overflow-y: auto;
-}
-
-.upload-section p {
-    margin: 0;
-    height: 100%;
-    width: 100%;
-}
-
-.content-wrapper #upload-resumes {
-    display: none;
-}
-
-.content-wrapper .upload-resumes-label {
+.content-wrapper .file-card .remove-file-btn {
+    position: absolute;
+    top: -0.75em;
+    right: -0.5em;
+    border-radius: 50%;
+    height: 2em;
+    width: 2em;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
-    font-size: 3rem;
-    color: var(--clr-primary);
-    background-color: var(--clr-bg-surface);
-    border: 2px dashed var(--clr-primary);
-    border-radius: var(--radius-md);
+    
+    background-color: var(--clr-bg-main); 
+    border: 1px solid var(--clr-border);
+    color: var(--clr-text-muted); 
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
     cursor: pointer;
+    
+    box-shadow: var(--shadow-sm);
+    
     transition: all 0.2s ease;
 }
 
-.content-wrapper .upload-resumes-label:hover {
-    background-color: #e6f2ff;
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-}
-
-.content-wrapper .file-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-sm);
-    padding: var(--space-sm);
-    background-color: var(--clr-bg-surface);
-    border-radius: var(--radius-md);
-    border: 1px solid var(--clr-border);
-    box-shadow: var(--shadow-sm);
-    position: relative;
-}
-
-.content-wrapper .file-preview {
-    width: 48px;
-    height: 60px;
-    background-color: #ffebee;
-    border-radius: var(--radius-sm);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.content-wrapper .file-card .remove-file-btn:hover {
+    background-color: var(--clr-danger);
+    color: #ffffff;
+    border-color: var(--clr-danger);
+    
+    transform: scale(1.15); 
     box-shadow: var(--drop-shadow-sm);
-}
-
-.content-wrapper .file-preview::before {
-    content: "PDF";
-    font-size: var(--fs-xs);
-    font-weight: var(--fw-semibold);
-    color: var(--clr-danger);
-}
-
-.content-wrapper .file-card .file-name {
-    font-size: var(--fs-xs);
-    font-weight: var(--fw-semibold);
-    color: var(--clr-text-main);
-    text-align: center;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }

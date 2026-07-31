@@ -12,8 +12,7 @@ function renderUploadedFiles() {
         return cardContainer;
     }
     
-
-    Array.from(uploadedFiles).forEach((file) => {
+    Array.from(uploadedFiles).forEach((file, index) => {
         const fileCard = createDOMElement({
             name: "file-card",
         })
@@ -21,16 +20,25 @@ function renderUploadedFiles() {
         const filePreview = createDOMElement({
             name: "file-preview",
         })
+        filePreview.dataset.id = "file-" + index;
     
         const fileName = createDOMElement({
             type: "p",
             name: "file-name",
             text: file.name
         })
-    
+        
+        const removeFileBtn = createDOMElement({
+            type: "button",
+            name: "remove-file-btn",
+            text: "X"
+        });
+        removeFileBtn.dataset.id = "file-" + index;
+
         fileCard.appendChild(filePreview);
         fileCard.appendChild(fileName);        
-        
+        fileCard.appendChild(removeFileBtn);
+
         cardContainer.appendChild(fileCard);
     })
 
@@ -105,8 +113,7 @@ export function renderEvaluationContent() {
     jobCriteriaLabel.htmlFor = jobCriteriaId;
 
     const jobCriteriaInput = createDOMElement({
-        type: "input",
-        kind: "text",
+        type: "textarea",
         name: jobCriteriaId + "-input",
         id: jobCriteriaId
     })

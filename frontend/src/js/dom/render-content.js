@@ -1,4 +1,5 @@
 import { capitalize } from "../utils/utilities";
+import avatarImg from "../../assets/images/avatar.jpeg";
 
 function createDOMElement({type="div", kind="", name = "", text = "", classArr = [], id = ""}) {
     const element = document.createElement(type);
@@ -71,12 +72,30 @@ function renderSidebar() {
     });
 
     // Header
-    const header = createDOMElement({name:"header"});
-
     const profile = createDOMElement({name:"profile"});
-    // TODO add a profile here later
+    
+    const profileDetails = createDOMElement({name:"details"});
 
-    header.appendChild(profile);
+    const avatar = createDOMElement({type: "img"});
+    avatar.src = avatarImg;
+
+    const profileUsername = createDOMElement({
+        type: "p",
+        id: "username",
+        text: "Mazine"
+    })
+
+    const toggleSidebar = createDOMElement({
+        type: "button",
+        id: "toggle-sidebar"
+    })
+
+    profileDetails.appendChild(avatar);
+    profileDetails.appendChild(profileUsername);
+
+    profile.appendChild(profileDetails);
+    profile.appendChild(toggleSidebar);
+
 
     // Body
     const body = createDOMElement({name:"body"});
@@ -105,7 +124,7 @@ function renderSidebar() {
 
     footer.appendChild(settingsTab);
 
-    sidebarWrapper.appendChild(header);
+    sidebarWrapper.appendChild(profile);
     sidebarWrapper.appendChild(body);
     sidebarWrapper.appendChild(footer);
 

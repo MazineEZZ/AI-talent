@@ -1,9 +1,8 @@
-
 body {
     margin: 0;
     height: 100vh;
     width: 100vw;
-    overflow-x: hidden;
+    overflow: hidden;
     background-color: var(--clr-bg-main);
     font-family: var(--font-family);
     color: var(--clr-text-main);
@@ -11,7 +10,8 @@ body {
 
 .app-wrapper {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: var(--sidebar-size) 1fr;
+    grid-template-rows: 100%;   
     width: 100%;
     height: 100%;
 }
@@ -27,17 +27,47 @@ body {
     transition: all 0.6s;
 }
 
-.sidebar.closed {
-    transform: translateX(-280px);
+.sidebar-wrapper.closed {
+    transform: translateX(-240px);
 }
 
 .profile {
-    flex: 0.1;
+    height: 3.5em;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 3.5em;
 }
+
+.profile .details {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.profile img {
+    width: 2.5em;
+    height: 2.5em;
+    
+    border-radius: 50%;
+    outline: 2px solid var(--clr-primary);
+    outline-offset: 2px;
+    
+    cursor: pointer;
+}
+
+.profile #username {
+    font-size: var(--fs-lg);
+    font-weight: var(--fw-semibold);
+}
+
+.profile #toggle-sidebar {
+    width: 2em;
+    height: 2em;
+
+    transition: transform 0.6s, background-color 0.3s ;
+}
+
 
 .sidebar-wrapper .body {
     flex-grow: 1;
@@ -70,14 +100,18 @@ body {
 }
 
 .content-wrapper {
-    flex: 1;
     display: flex;
     flex-direction: column;
+    min-height: 0; 
     transition: all 0.6s;
 }
 
 .content-wrapper.closed {
-    margin-left: -280px;
+    margin-left: calc(var(--sidebar-size) * -1)
+}
+
+#toggle-sidebar.closed {
+    transform: translateX(90px);
 }
 
 .content-wrapper .header {
@@ -104,6 +138,7 @@ body {
 .content-wrapper .body {
     flex-grow: 1;
     padding: var(--space-xl) clamp(3rem, 6vw, 8rem);
+    min-height: 0;
     display: flex;
     flex-direction: column;
 }
@@ -142,12 +177,14 @@ body {
 
 .job-criteria-input {
     width: 100%;
+    height: 100px;
     padding: var(--space-sm);
     border: 1px solid var(--clr-border);
     border-radius: var(--radius-sm);
     font-family: var(--font-family);
     font-size: var(--fs-sm);
     box-sizing: border-box;
+    resize: none;
     transition: outline 0.2s;
 }
 
